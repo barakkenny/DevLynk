@@ -36,7 +36,7 @@ async function signUp(req, res){
 
 
     }catch(err){
-        console.log(err);
+        console.log(err)
     }
  }
 
@@ -62,13 +62,13 @@ async function signUp(req, res){
 
     const accessToken = jwt.sign({
         userId: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName
     }, 
     process.env.JWT_SECRET_KEY,
      {
         expiresIn: '15m'
     })
+
+    res.cookie("token", accessToken)
 
     res.status(200).json({
         success: true,
