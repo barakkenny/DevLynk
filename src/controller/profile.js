@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const User = require("../models/user");
+const { validateEditProfileData } = require('../utils/validator')
 
 async function profile(req, res) {
   try {
@@ -12,4 +12,22 @@ async function profile(req, res) {
   }
 }
 
-module.exports = profile;
+async function editProfile(req, res){
+  try{
+    if(!validateEditProfileData(req)){
+      throw new Error("invalid edit request")
+    }
+
+    const loggedInUser = req.user;
+
+    Object.keys(req.body).forEach((key) => (loggedInUser[key] = req.body[key]))
+
+  } catch (err) {
+    res.status(400).send("Error " + err.message);
+  }
+}
+
+module.exports = {
+  profile,
+  editProfile
+}

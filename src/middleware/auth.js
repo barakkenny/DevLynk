@@ -8,7 +8,6 @@ const userAuth = async (req, res, next) => {
         }
     
         const isTokenValid = jwt.verify(token, process.env.JWT_SECRET_KEY);
-        console.log(isTokenValid);
     
         const { _id } = isTokenValid;
     

@@ -65,10 +65,12 @@ async function signUp(req, res){
     }, 
     process.env.JWT_SECRET_KEY,
      {
-        expiresIn: '15m'
+        expiresIn: '7d'
     })
 
-    res.cookie("token", accessToken)
+    res.cookie("token", accessToken, {
+        expires: new Date(Date.now() + 8 * 36000000),
+    })
 
     res.status(200).json({
         success: true,
@@ -78,8 +80,16 @@ async function signUp(req, res){
     })
  }
 
+ async function signOut(req, res) {
+    res.cookie('token', null, {
+        expires: new Date(Date.now())
+    })
+    res.send('logout successful')
+ }
+
 
  module.exports = {
     signUp,
-    signIn
+    signIn,
+    signOut
  }
