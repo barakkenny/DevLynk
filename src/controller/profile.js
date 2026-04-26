@@ -1,14 +1,17 @@
-const jwt = require("jsonwebtoken");
+// const jwt = require("jsonwebtoken");
 const { validateEditProfileData } = require('../utils/validator')
 
-async function profile(req, res) {
+async function viewProfile(req, res) {
   try {
-    const user = req.user
+    const user = req.user;
 
-    res.send(user);
+    res.send(user)
 
   } catch (err) {
-    res.status(400).send("Error " + err.message);
+    res.status(400).json({
+      success: false,
+      message: err,
+    })
   }
 }
 
@@ -19,8 +22,9 @@ async function editProfile(req, res){
     }
 
     const loggedInUser = req.user;
-
+    console.log(loggedInUser)
     Object.keys(req.body).forEach((key) => (loggedInUser[key] = req.body[key]))
+    res.send(`${loggedInUser.firstName}, your profile updated successfully`)
 
   } catch (err) {
     res.status(400).send("Error " + err.message);
@@ -28,6 +32,6 @@ async function editProfile(req, res){
 }
 
 module.exports = {
-  profile,
+  viewProfile,
   editProfile
 }

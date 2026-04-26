@@ -7,6 +7,4 @@ authRouter.post('/register', signUp);
 authRouter.post('/login', signIn)
 authRouter.post('/logout', signOut)
 
-module.exports = {
-    authRouter
-}
+module.exports = authRouter

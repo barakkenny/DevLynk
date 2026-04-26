@@ -39,14 +39,9 @@ const userSchema = new mongoose.Schema({
     gender: {
         type: String,
         enum: {
-            values: ["male", "female", "other"],
+            values: ["male", "female"],
             message: `{VALUE} is not a valid gender type`
-        },
-        validate(value) {
-            if(!["male", "female", "others"].includes(value)){
-                throw new Error("Gender is not valid")
-            }
-        },
+        }
     },
     photoUrl: {
         type: String,
@@ -69,5 +64,5 @@ const userSchema = new mongoose.Schema({
     timestamps: true
 })
 
-const User = mongoose.model("User", userSchema)
+const User = new mongoose.model("User", userSchema)
 module.exports = User;

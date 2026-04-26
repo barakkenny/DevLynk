@@ -81,10 +81,22 @@ async function signUp(req, res){
  }
 
  async function signOut(req, res) {
-    res.cookie('token', null, {
+    try{
+        res.cookie('token', null, {
         expires: new Date(Date.now())
     })
-    res.send('logout successful')
+
+    const user = req.body
+    res.status(200).json({
+        success: true,
+        message: "User successfully logged out",
+    })
+    }catch(err){
+        return res.status(400).json({
+            success: false,
+            message: `Unsuccessful : ${err}`
+        })
+    }
  }
 
 

@@ -1,7 +1,7 @@
 const express = require('express')
 const {PORT} = require('./src/config/server');
 const dbConnection = require('./src/config/db');
-const { authRouter } = require('./src/routes/userRoutes');
+const authRouter = require('./src/routes/authRoutes');
 const profileRouter = require('./src/routes/profileRoute');
 const cookieParser = require('cookie-parser');
 const connectionRouter = require('./src/routes/connectionRoute');
@@ -12,8 +12,8 @@ app.use(express.json());
 app.use(cookieParser())
 
 app.use('/api/auth', authRouter);
-app.use('/profile', profileRouter)
-app.use('/connection-request', connectionRouter)
+app.use('/profile', profileRouter);
+app.use('/request', connectionRouter);
 
 dbConnection();
 
