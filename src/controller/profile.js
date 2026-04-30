@@ -1,5 +1,5 @@
-// const jwt = require("jsonwebtoken");
-const { validateEditProfileData } = require('../utils/validator')
+const jwt = require("jsonwebtoken");
+const { validateProfileEditData } = require('../utils/validator')
 
 async function viewProfile(req, res) {
   try {
@@ -10,20 +10,22 @@ async function viewProfile(req, res) {
   } catch (err) {
     res.status(400).json({
       success: false,
-      message: err,
-    })
+      message: err.message,
+    });
   }
-}
+};
 
 async function editProfile(req, res){
   try{
-    if(!validateEditProfileData(req)){
+    if(!validateProfileEditData(req)){
       throw new Error("invalid edit request")
     }
 
     const loggedInUser = req.user;
-    console.log(loggedInUser)
+
     Object.keys(req.body).forEach((key) => (loggedInUser[key] = req.body[key]))
+    
+    await loggedInUser.save();
     res.send(`${loggedInUser.firstName}, your profile updated successfully`)
 
   } catch (err) {

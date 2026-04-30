@@ -57,7 +57,7 @@ async function signUp(req, res){
             success: false,
             message: "Invalid credentials",
         })
-    };
+    }; 
 
 
     const accessToken = jwt.sign({

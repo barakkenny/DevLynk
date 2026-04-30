@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const jwt = require("jsonwebtoken");
 
 const userAuth = async (req, res, next) => {
     try{
@@ -9,14 +10,16 @@ const userAuth = async (req, res, next) => {
     
         const isTokenValid = jwt.verify(token, process.env.JWT_SECRET_KEY);
     
-        const { _id } = isTokenValid;
+        const { userId } = isTokenValid;
     
-        const user = await User.find(_id);
+        const user = await User.findById(userId);
         if (!user) {
           throw new Error("User does not exist");
         }
+
+        req.user = user;
     
-        next()
+        next();
     }catch(err) {
       return res.status(400).json({
         success: false,
